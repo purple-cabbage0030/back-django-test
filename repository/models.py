@@ -24,6 +24,12 @@ class Food(models.Model):
     fprotein = models.FloatField()
     ffat = models.FloatField()
 
+    def __str__(self):
+        return f"{self.fid}. {self.fname}"
+
+    class Meta:
+        ordering=['fname']
+
 class Diet(models.Model):
     diet_id = models.AutoField(primary_key=True)
     uuid = models.ForeignKey(Users, on_delete=models.CASCADE)
