@@ -6,7 +6,7 @@ from PIL import Image
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 from rest_framework.views import APIView

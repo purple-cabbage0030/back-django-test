@@ -2,25 +2,41 @@ import json
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 from .models import Users
+from .serializers import UserSerializer
 
 # 회원가입
-def signup(request):
-    if(request.method == 'POST'):
-        user_data = json.loads(request.body)
-        print(user_data, type(user_data))
+@api_view(['GET','POST'])
+def registrationView(request):
+    if request.method == 'POST':
+        print('111111111111')
+        serializer = UserSerializer(data=request.data)
+        print(serializer)
+        data = {}
+        if serializer.is_valid():
+            print('got valid')
+            new_user = Users(
+                uuid = serializer.validated_data['uuid'], 
+                upw = serializer.validated_data['upw'],
+                uage = int(serializer.validated_data['uage']), 
+                usex = serializer.validated_data['usex'],
+                uheight = float(serializer.validated_data['uheight']),
+                uweight = float(serializer.validated_data['uweight']),
+                uact = serializer.validated_data['uact'], 
+                urdc = float(serializer.validated_data['urdc'])
+                )
+            new_user.save()
+            data['response'] = "회원가입 성공"
+            data['uuid'] = new_user.uuid
+        else:
+            data = serializer.errors
+        print(data)
+        return JsonResponse(data)
 
-        new_user = Users(uuid = user_data['UUID'], upw = user_data['UPW'],\
-                         uage = int(user_data['UAGE']), usex = user_data['USEX'], \
-                         uheight = float(user_data['UHEIGHT']), uweight = float(user_data['UWEIGHT']),\
-                         uact = user_data['UACT'], urdc = float(user_data['URDC']))
-
-    print(new_user.uuid)
-    new_user.save()
-
-    if new_user.uuid:
-        return JsonResponse(result= "id :" +request.form.get("id") 
-        +"회원가입 완료. 로그인 페이지로 이동합니다.")
     else:
-        return ""
+        print('데이터 안 옴')
