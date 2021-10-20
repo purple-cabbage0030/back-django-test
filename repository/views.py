@@ -26,7 +26,7 @@ def helloAPI(request):
     return Response('hello world')
 
 @api_view(['GET', 'POST'])
-def predictFood(request):
+def predictFoodView(request):
     targetx = 128
     targety = 128
 
@@ -59,8 +59,10 @@ def predictFood(request):
     print(serializer.data)
     return JsonResponse(serializer.data)
 
-
-
+@api_view(['POST'])
+def dietSaveView(request):
+    print("데이터받았습니다",request.data)
+    return JsonResponse(request.data)
 
 # @csrf_exempt
 # def predict(request):
