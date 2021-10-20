@@ -33,7 +33,7 @@ class Food(models.Model):
 class Diet(models.Model):
     diet_id = models.AutoField(primary_key=True)
     uuid = models.ForeignKey(Users, on_delete=models.CASCADE)
-    diet_datetime = models.DateTimeField()
+    diet_datetime = models.DateTimeField(auto_now_add=True)
     meal = models.CharField(max_length=30)
     fid = models.ForeignKey(Food, on_delete=models.PROTECT)
     fname = models.CharField(max_length=30)
