@@ -3,6 +3,6 @@ from .views import helloAPI, predictFood
 
 app_name = 'repository'
 urlpatterns = [
-    path('hello/', helloAPI, name='hello'),
-    path('predict/', predictFood, name='prediction')
+    path('hello', helloAPI, name='hello'),
+    path('predict', predictFood, name='prediction')
 ]

@@ -6,7 +6,7 @@ from PIL import Image
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 from rest_framework.views import APIView
@@ -97,29 +97,3 @@ def predictFood(request):
 #         result_str = json.dumps(result)   # dictionary를 json문자열로 반환
     
 #         return HttpResponse(result_str)
-
-
-# def foodselect(request):
-#     if request.POST:
-#         fid = ''
-#         imagefile = ''
-#         result = ''
-#         food = []
-#         filename =''
-#         ans = ''
-#         imagefile = request.FILES['image']
-#         filename = werkzeug.utils.secure_filename(imagefile.filename)
-#         imagefile.save('./classification_model/photos/' + filename)
-#         fid = food_model.image_data(filename)
-#         print('아이디입니다',fid,'==='*50)
-
-#         result = Food.objects.get(pk=fid)   # Food 모델 객체
-
-#         # fid 제외 나머지 데이터 str ??
-    
-#         food = list(map(str,result[2:]))
-#         food.insert(0,result[1])
-#         ans = ','.join(food)
-#         print('전송데이터',ans)
-
-#         return JsonResponse({'data':ans})
