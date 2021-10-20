@@ -17,8 +17,8 @@ from rest_framework import status
 from config import settings
 
 from .apps import ApiConfig
-from .models import Food
-from .serializers import FoodSerializer
+from .models import Food, Diet
+from .serializers import FoodSerializer, DietSerializer
 
 
 @api_view(['GET'])
@@ -61,8 +61,28 @@ def predictFoodView(request):
 
 @api_view(['POST'])
 def dietSaveView(request):
-    print("데이터받았습니다",request.data)
-    return JsonResponse(request.data)
+    serializer = DietSerializer(data=request.data)
+    print("데이터 받았습니다",request.data)
+    data = {}
+    if serializer.is_valid():
+        print('got valid')
+        save_data = Diet(
+            uuid=serializer.validated_data['uuid'], 
+            fid = serializer.validated_data['fid'],
+            fname=serializer.validated_data['fname'], 
+            meal = serializer.validated_data['meal'], 
+            amount=serializer.validated_data['amount'],
+            cal=serializer.validated_data['cal'],
+            carboh=serializer.validated_data['carboh'],
+            protein=serializer.validated_data['protein'],
+            fat=serializer.validated_data['fat'])
+        save_data.save()
+        data['response'] = '저장 성공'
+        # data['uuid'] - save_data.uuid
+    else:
+        data = serializer.errors
+    print(data)
+    return JsonResponse(data)
 
 # @csrf_exempt
 # def predict(request):
