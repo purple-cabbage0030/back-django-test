@@ -1,9 +1,10 @@
 from django.urls import path, include
-from .views import helloAPI, predictFoodView, dietSaveView
+from .views import predictFoodView, dietSaveView, dietSelectView, dietListView
 
 app_name = 'repository'
 urlpatterns = [
-    path('hello', helloAPI, name='hello'),
     path('predict', predictFoodView, name='prediction'),
-    path('dietsave', dietSaveView, name='dietsave')
+    path('dietsave', dietSaveView, name='dietsave'),
+    path('dietselect', dietSelectView, name='dietselect'),
+    path('dietlist', dietListView, name='dietlist'),
 ]
