@@ -56,7 +56,7 @@ def predictFoodView(request):
 def dietSaveView(request):
     serializer = DietSerializer(data=request.data)
     print("데이터 받았습니다",request.data)
-    data = {}
+    data = []
     if serializer.is_valid():
         print('got valid')
         save_data = Diet(
@@ -86,20 +86,18 @@ def dietSelectView(request):
     start_date = end_date - timedelta(days=period)
     diet_list = Diet.objects.filter(uuid=uuid, diet_datetime__range=[start_date, end_date])
     # print(start_date, end_date, diet_list, type(diet_list))
-    data = {}
+    data = {'diet_id':[], 'uuid':[], 'diet_datetime':[], 'meal':[], 'fid':[], 'fname':[], 'amount':[], 'cal':[], 'carboh':[], 'protein':[], 'fat':[]}
     for diet in diet_list:
-        data['diet_id'] = diet.pk
-        data['uuid'] = diet.uuid.uuid
-        data['diet_datetime'] = diet.diet_datetime.strftime('%Y년 %m월 %d일 %H:%M:%S')
-        data['meal'] = diet.meal
-        data['fid'] = diet.fid.fid
-        data['fname'] = diet.fname
-        data['amount'] = diet.amount
-        data['cal'] = diet.cal
-        data['carboh'] = diet.carboh
-        data['protein'] = diet.protein
-        data['fat'] = diet.fat
-    print(data)
-
-    # 시각화 하는 부분 계산 ??
-    return Response(data)
+        data['diet_id'].append(diet.pk)
+        data['uuid'].append(diet.uuid.uuid)
+        data['diet_datetime'].append(diet.diet_datetime.strftime('%Y년 %m월 %d일 %H:%M:%S'))
+        data['meal'].append(diet.meal)
+        data['fid'].append(diet.fid.fid)
+        data['fname'].append(diet.fname)
+        data['amount'].append(diet.amount)
+        data['cal'].append(diet.cal)
+        data['carboh'].append(diet.carboh)
+        data['protein'].append(diet.protein)
+        data['fat'].append(diet.fat)
+    # print(data)
+    return JsonResponse(data)
