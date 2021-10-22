@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import date, datetime, timedelta
 import numpy as np
 import werkzeug
 from PIL import Image
@@ -55,7 +56,7 @@ def predictFoodView(request):
 def dietSaveView(request):
     serializer = DietSerializer(data=request.data)
     print("데이터 받았습니다",request.data)
-    data = {}
+    data = []
     if serializer.is_valid():
         print('got valid')
         save_data = Diet(
@@ -75,14 +76,28 @@ def dietSaveView(request):
     print(data)
     return JsonResponse(data)
 
-# 특정 식단 데이터 조회
-@api_view(['GET', 'POST'])
-def dietSelectView(request):
-    diet_list = Diet.objects.all()
-    serializer = DietSerializer
-    pass
-
 # 기간별 식단 데이터 조회
 @api_view(['GET', 'POST'])
-def dietListView(request):
-    pass
+def dietSelectView(request):
+    uuid = request.POST.get('uuid')
+    period = int(request.POST.get('period'))
+    # print(uuid, period, type(period))
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days=period)
+    diet_list = Diet.objects.filter(uuid=uuid, diet_datetime__range=[start_date, end_date])
+    # print(start_date, end_date, diet_list, type(diet_list))
+    data = {'diet_id':[], 'uuid':[], 'diet_datetime':[], 'meal':[], 'fid':[], 'fname':[], 'amount':[], 'cal':[], 'carboh':[], 'protein':[], 'fat':[]}
+    for diet in diet_list:
+        data['diet_id'].append(diet.pk)
+        data['uuid'].append(diet.uuid.uuid)
+        data['diet_datetime'].append(diet.diet_datetime.strftime('%Y년 %m월 %d일 %H:%M:%S'))
+        data['meal'].append(diet.meal)
+        data['fid'].append(diet.fid.fid)
+        data['fname'].append(diet.fname)
+        data['amount'].append(diet.amount)
+        data['cal'].append(diet.cal)
+        data['carboh'].append(diet.carboh)
+        data['protein'].append(diet.protein)
+        data['fat'].append(diet.fat)
+    # print(data)
+    return JsonResponse(data)
