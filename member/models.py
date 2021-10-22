@@ -18,3 +18,6 @@ class Users(models.Model):
     uweight = models.FloatField(verbose_name='uweight')
     uact = models.ForeignKey(Activity, on_delete=models.PROTECT, verbose_name='uact')
     urdc = models.FloatField(verbose_name='urdc')
+
+    def __str__(self):
+        return self.uuid

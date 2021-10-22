@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import date, datetime, timedelta
 import numpy as np
 import werkzeug
 from PIL import Image
@@ -75,14 +76,30 @@ def dietSaveView(request):
     print(data)
     return JsonResponse(data)
 
-# 특정 식단 데이터 조회
-@api_view(['GET', 'POST'])
-def dietSelectView(request):
-    diet_list = Diet.objects.all()
-    serializer = DietSerializer
-    pass
-
 # 기간별 식단 데이터 조회
 @api_view(['GET', 'POST'])
-def dietListView(request):
-    pass
+def dietSelectView(request):
+    uuid = request.POST.get('uuid')
+    period = int(request.POST.get('period'))
+    # print(uuid, period, type(period))
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days=period)
+    diet_list = Diet.objects.filter(uuid=uuid, diet_datetime__range=[start_date, end_date])
+    # print(start_date, end_date, diet_list, type(diet_list))
+    data = {}
+    for diet in diet_list:
+        data['diet_id'] = diet.pk
+        data['uuid'] = diet.uuid.uuid
+        data['diet_datetime'] = diet.diet_datetime.strftime('%Y년 %m월 %d일 %H:%M:%S')
+        data['meal'] = diet.meal
+        data['fid'] = diet.fid.fid
+        data['fname'] = diet.fname
+        data['amount'] = diet.amount
+        data['cal'] = diet.cal
+        data['carboh'] = diet.carboh
+        data['protein'] = diet.protein
+        data['fat'] = diet.fat
+    print(data)
+
+    # 시각화 하는 부분 계산 ??
+    return Response(data)

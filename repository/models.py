@@ -41,4 +41,4 @@ class Diet(models.Model):
     cal = models.FloatField()
     carboh = models.FloatField()
     protein = models.FloatField()
-    fat = models.FloatField()    
+    fat = models.FloatField()
