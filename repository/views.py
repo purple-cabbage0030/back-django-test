@@ -21,6 +21,7 @@ from .apps import ApiConfig
 from .models import Food, Diet, Train
 from .serializers import FoodSerializer, DietSerializer, TrainSerializer
 
+# 음식 분류
 @api_view(['GET', 'POST'])
 def predictFoodView(request):
     targetx = 128
@@ -52,6 +53,7 @@ def predictFoodView(request):
     print(serializer.data)
     return JsonResponse(serializer.data)
 
+# 식단 기록 저장
 @api_view(['POST'])
 def dietSaveView(request):
     serializer = DietSerializer(data=request.data)
@@ -97,15 +99,20 @@ def trainSaveView(request):
     print(data)
     return JsonResponse(data)
 
+# 식단 기록 기간별 조회
 @api_view(['POST'])
 def dietSelectView(request):
-    uuid = request.POST.get('uuid')
-    period = int(request.POST.get('period'))
-    print(uuid, period, type(period))
+    requested_data = request.data
+    uuid = requested_data['uuid']
+    period = requested_data['period']
+    print(uuid, period, type(uuid), type(period))
+
     end_date = datetime.today()
     start_date = end_date - timedelta(days=period)
+    start_date = start_date.replace(microsecond=0, second=0, minute=0, hour=0)
+    print(start_date, end_date)
+
     diet_list = Diet.objects.filter(uuid=uuid, diet_datetime__range=[start_date, end_date])
-    # print(start_date, end_date, diet_list, type(diet_list))
     data = {'diet_id':[], 'uuid':[], 'diet_datetime':[], 'meal':[], 'fid':[], 'fname':[], 'amount':[], 'cal':[], 'carboh':[], 'protein':[], 'fat':[]}
     for diet in diet_list:
         data['diet_id'].append(diet.pk)
@@ -119,5 +126,30 @@ def dietSelectView(request):
         data['carboh'].append(diet.carboh)
         data['protein'].append(diet.protein)
         data['fat'].append(diet.fat)
-    # print(data)
+    print(data)
+    return JsonResponse(data)
+
+# 운동 기록 기간별 조회
+@api_view(['POST'])
+def trainSelectView(request):
+    requested_data = request.data
+    uuid = requested_data['uuid']
+    period = requested_data['period']
+    print(uuid, period, type(uuid), type(period))
+
+    end_date = date.today()
+    start_date = end_date - timedelta(days=period)
+    print(start_date, end_date)
+
+    train_list = Train.objects.filter(uuid=uuid, train_date__range=[start_date, end_date])
+    data = {'train_id':[], 'uuid':[], 'train_date':[], 'eid':[], 'error_name':[], 'count':[], 'error_count':[]}
+    for train in train_list:
+        data['train_id'].append(train.pk)
+        data['uuid'].append(train.uuid.uuid)
+        data['train_date'].append(train.train_date.strftime('%Y년 %m월 %d일'))
+        data['eid'].append(train.eid.eid)
+        data['error_name'].append(train.error_name)
+        data['count'].append(train.count)
+        data['error_count'].append(train.error_count)
+    print(data)
     return JsonResponse(data)
