@@ -117,7 +117,7 @@ def dietSelectView(request):
     for diet in diet_list:
         data['diet_id'].append(diet.pk)
         data['uuid'].append(diet.uuid.uuid)
-        data['diet_datetime'].append(diet.diet_datetime.strftime('%Y년 %m월 %d일 %H:%M:%S'))
+        data['diet_datetime'].append(diet.diet_datetime.strftime('%Y년 %m월 %d일'))
         data['meal'].append(diet.meal)
         data['fid'].append(diet.fid.fid)
         data['fname'].append(diet.fname)
