@@ -7,4 +7,5 @@ urlpatterns = [
     path('dietsave', dietSaveView, name='dietsave'),
     path('dietselect', dietSelectView, name='dietselect'),
     path('dietlist', dietListView, name='dietlist'),
+    path('trainsave', trainSaveView, name='dietsave'),
 ]

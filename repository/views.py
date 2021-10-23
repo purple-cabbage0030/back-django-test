@@ -17,8 +17,8 @@ from rest_framework import serializers, status
 from config import settings
 
 from .apps import ApiConfig
-from .models import Food, Diet
-from .serializers import FoodSerializer, DietSerializer
+from .models import Food, Diet, Trian
+from .serializers import FoodSerializer, DietSerializer, TrainSerializer
 
 @api_view(['GET', 'POST'])
 def predictFoodView(request):
@@ -86,3 +86,24 @@ def dietSelectView(request):
 @api_view(['GET', 'POST'])
 def dietListView(request):
     pass
+
+# 운동 기록 저장
+@api_view(['GET', 'POST'])
+def trainSaveView(request):
+    serializer = TrainSerializer(data=request.data)
+    print("데이터 받았습니다",request.data)
+    data = {}
+    if serializer.is_valid():
+        print('got valid')
+        save_data = Train(
+            uuid=serializer.validated_data['uuid'], 
+            eid = serializer.validated_data['eid'],
+            error_name=serializer.validated_data['error_name'], 
+            count = serializer.validated_data['count'], 
+            error_count=serializer.validated_data['error_count'])
+        save_data.save()
+        data['response'] = '저장 성공'
+    else:
+        data = serializer.errors
+    print(data)
+    return JsonResponse(data)
