@@ -7,7 +7,7 @@ from PIL import Image
 
 from django.shortcuts import render
 from django.http import HttpResponse
-# from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 from rest_framework.views import APIView
@@ -18,7 +18,7 @@ from rest_framework import serializers, status
 from config import settings
 
 from .apps import ApiConfig
-from .models import Food, Diet, Trian
+from .models import Food, Diet, Train
 from .serializers import FoodSerializer, DietSerializer, TrainSerializer
 
 @api_view(['GET', 'POST'])
@@ -97,10 +97,11 @@ def trainSaveView(request):
     print(data)
     return JsonResponse(data)
 
+@api_view(['POST'])
 def dietSelectView(request):
     uuid = request.POST.get('uuid')
     period = int(request.POST.get('period'))
-    # print(uuid, period, type(period))
+    print(uuid, period, type(period))
     end_date = datetime.today()
     start_date = end_date - timedelta(days=period)
     diet_list = Diet.objects.filter(uuid=uuid, diet_datetime__range=[start_date, end_date])
