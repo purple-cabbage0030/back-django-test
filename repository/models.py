@@ -4,16 +4,16 @@ from member.models import Users
 class Exercise(models.Model):
     eid = models.IntegerField(primary_key=True)
     ename = models.CharField(max_length=30)
-    error_name = models.CharField(max_length=30)
+    # error_name = models.CharField(max_length=30)
 
 class Train(models.Model):
     train_id = models.AutoField(primary_key=True)
     uuid = models.ForeignKey(Users, on_delete=models.CASCADE)
     train_date = models.DateField(auto_now_add=True)
     eid = models.ForeignKey(Exercise, on_delete=models.PROTECT)
-    error_name = models.CharField(max_length=30)
     count = models.IntegerField()
-    error_count = models.IntegerField()
+    # error_name = models.CharField(max_length=30)
+    # error_count = models.IntegerField()
 
 class Food(models.Model):
     fid = models.CharField(primary_key=True, max_length=20)
