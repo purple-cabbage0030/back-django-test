@@ -117,7 +117,7 @@ def dietSelectView(request):
     for diet in diet_list:
         data['diet_id'].append(diet.pk)
         data['uuid'].append(diet.uuid.uuid)
-        data['diet_datetime'].append(diet.diet_datetime.strftime('%Y년 %m월 %d일'))
+        data['diet_datetime'].append(diet.diet_datetime.strftime('%m월 %d일'))
         data['meal'].append(diet.meal)
         data['fid'].append(diet.fid.fid)
         data['fname'].append(diet.fname)
@@ -146,7 +146,7 @@ def trainSelectView(request):
     for train in train_list:
         data['train_id'].append(train.pk)
         data['uuid'].append(train.uuid.uuid)
-        data['train_date'].append(train.train_date.strftime('%Y년 %m월 %d일'))
+        data['train_date'].append(train.train_date.strftime('%m월 %d일'))
         data['eid'].append(train.eid.eid)
         data['error_name'].append(train.error_name)
         data['count'].append(train.count)
