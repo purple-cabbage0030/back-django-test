@@ -78,6 +78,38 @@ def dietSaveView(request):
     print(data)
     return JsonResponse(data)
 
+# 식단 시각화 데이터 select
+@api_view(['POST'])
+def dietVisView(request):
+    requested_data = request.data
+    uuid = requested_data['uuid']
+    period = requested_data['period']
+    print(uuid, period, type(uuid), type(period))
+
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days=period)
+    start_date = start_date.replace(microsecond=0, second=0, minute=0, hour=0)
+    print(start_date, end_date)
+
+    diet_list = Diet.objects.filter(uuid=uuid, diet_datetime__range=[start_date, end_date])
+    data = {'diet_id':[], 'uuid':[], 'diet_datetime':[], 'meal':[], 'fid':[], 'fname':[], 'amount':[], 'cal':[], 'carboh':[], 'protein':[], 'fat':[]}
+    for diet in diet_list:
+        if diet.diet_datetime.strftime('%m월 %d일') in data['diet_datetime']:
+            data['amount'][-1] += int(diet.amount)
+            data['cal'][-1] += int(diet.cal)
+            data['carboh'][-1] += int(diet.carboh)
+            data['protein'][-1] += int(diet.protein)
+            data['fat'][-1] += int(diet.fat)
+        else:
+            data['diet_datetime'].append(diet.diet_datetime.strftime('%m월 %d일'))
+            data['amount'].append(int(diet.amount))
+            data['cal'].append(int(diet.cal))
+            data['carboh'].append(int(diet.carboh))
+            data['protein'].append(int(diet.protein))
+            data['fat'].append(int(diet.fat))
+    print(data)
+    return JsonResponse(data)
+
 # 운동 기록 저장
 @api_view(['GET', 'POST'])
 def trainSaveView(request):
