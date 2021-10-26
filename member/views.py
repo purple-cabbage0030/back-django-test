@@ -14,9 +14,7 @@ from .serializers import UserSerializer
 @api_view(['GET','POST'])
 def registrationView(request):
     if request.method == 'POST':
-        print('111111111111')
         serializer = UserSerializer(data=request.data)
-        print(serializer)
         data = {}
         if serializer.is_valid():
             print('got valid')
