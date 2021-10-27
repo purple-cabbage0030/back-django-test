@@ -1,11 +1,6 @@
-import json
-from django.shortcuts import render
-from django.urls import reverse
 from django.http import JsonResponse
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import status
 
 from .models import Users
 from .serializers import UserSerializer
@@ -37,10 +32,10 @@ def registrationView(request):
         return JsonResponse(data)
 
     else:
-        print('데이터 안 옴')
+        print('method error')
 
 # 회원정보 조회
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def userSelectView(request):
     requested_data = request.data
     uuid = requested_data['uuid']

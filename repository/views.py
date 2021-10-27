@@ -1,21 +1,9 @@
-import os
-import json
-from datetime import date, datetime, timedelta
 import numpy as np
-import werkzeug
 from PIL import Image
+from datetime import date, datetime, timedelta
 
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import serializers, status
-
-from config import settings
 
 from .apps import ApiConfig
 from .models import Food, Diet, Train
@@ -57,7 +45,6 @@ def predictFoodView(request):
 @api_view(['POST'])
 def dietSaveView(request):
     serializer = DietSerializer(data=request.data)
-    print("데이터 받았습니다",request.data)
     data = []
     if serializer.is_valid():
         print('got valid')
@@ -111,10 +98,9 @@ def dietVisView(request):
     return JsonResponse(data)
 
 # 운동 기록 저장
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def trainSaveView(request):
     serializer = TrainSerializer(data=request.data)
-    print("데이터 받았습니다",request.data)
     data = {}
     if serializer.is_valid():
         print('got valid')

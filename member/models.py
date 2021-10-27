@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
 class Activity(models.Model):
     uact = models.CharField(primary_key=True, max_length=30)

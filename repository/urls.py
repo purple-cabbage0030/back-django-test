@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from .views import predictFoodView, dietSaveView, dietSelectView, trainSaveView, trainSelectView, dietVisView
 
 app_name = 'repository'
