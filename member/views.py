@@ -38,3 +38,35 @@ def registrationView(request):
 
     else:
         print('데이터 안 옴')
+
+# 회원정보 조회
+@api_view(['GET', 'POST'])
+def userSelectView(request):
+    requested_data = request.data
+    uuid = requested_data['uuid']
+    print(uuid)
+
+    user_info = Users.objects.get(pk=uuid)
+    serializer = UserSerializer(user_info)
+    print(serializer.data)
+    return JsonResponse(serializer.data)
+
+# 회원정보 수정
+@api_view(['GET', 'POST'])
+def userUpdateView(request):
+    if request.method == 'POST':
+        update_info = request.data
+        uuid = update_info['uuid']
+        print(uuid)
+
+        update_user = Users.objects.get(pk=uuid)
+        update_user.uage = update_info['uage']
+        update_user.uheight = update_info['uheight']
+        update_user.uweight = update_info['uweight']
+        update_user.uact.uact = update_info['uact']
+        update_user.urdc = update_info['urdc']
+        print(update_user.uage, update_user.uheight)
+        update_user.save()
+    else:
+        return Response('method error')
+    return Response('저장 성공')
