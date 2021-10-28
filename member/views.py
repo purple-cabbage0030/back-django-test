@@ -6,7 +6,7 @@ from .models import Users
 from .serializers import UserSerializer
 
 # 회원가입
-@api_view(['GET','POST'])
+@api_view(['POST'])
 def registrationView(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
@@ -32,7 +32,7 @@ def registrationView(request):
         return JsonResponse(data)
 
     else:
-        print('method error')
+        return Response('method error')
 
 # 회원정보 조회
 @api_view(['POST'])
