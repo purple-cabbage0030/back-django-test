@@ -2,9 +2,14 @@ from django.db import models
 from member.models import Users
 
 class Exercise(models.Model):
-    eid = models.IntegerField(primary_key=True)
+    eid = models.CharField(primary_key=True, max_length=20)
     ename = models.CharField(max_length=30)
-    # error_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"{self.eid}. {self.ename}"
+
+    class Meta:
+        ordering=['eid']
 
 class Train(models.Model):
     train_id = models.AutoField(primary_key=True)
@@ -12,8 +17,6 @@ class Train(models.Model):
     train_date = models.DateField(auto_now_add=True)
     eid = models.ForeignKey(Exercise, on_delete=models.PROTECT)
     count = models.IntegerField()
-    # error_name = models.CharField(max_length=30)
-    # error_count = models.IntegerField()
 
 class Food(models.Model):
     fid = models.CharField(primary_key=True, max_length=20)
