@@ -140,15 +140,13 @@ def trainView(request):
         print(start_date, end_date)
 
         train_list = Train.objects.filter(uuid=uuid, train_date__range=[start_date, end_date])
-        data = {'train_id':[], 'uuid':[], 'train_date':[], 'eid':[], 'error_name':[], 'count':[], 'error_count':[]}
+        data = {'train_id':[], 'uuid':[], 'train_date':[], 'eid':[], 'count':[]}
         for train in train_list:
             data['train_id'].append(train.pk)
             data['uuid'].append(train.uuid.uuid)
             data['train_date'].append(train.train_date.strftime('%m월 %d일'))
             data['eid'].append(train.eid.eid)
-            data['error_name'].append(train.error_name)
             data['count'].append(train.count)
-            data['error_count'].append(train.error_count)
         print(data)
         return JsonResponse(data)
 
