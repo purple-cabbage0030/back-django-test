@@ -10,7 +10,7 @@ from member.models import Activity
 from repository.models import Exercise, Food
 
 def act_data_insert():
-    act_data = pd.read_json('activity.json', encoding='utf-8')
+    act_data = pd.read_json('master_data/activity.json', encoding='utf-8')
     val = act_data.to_dict('list')
     print(val, len(act_data))
 
@@ -19,7 +19,7 @@ def act_data_insert():
         act.save()
 
 def food_data_insert():
-    food_data = pd.read_csv('foodtable1.csv', encoding='cp949')
+    food_data = pd.read_csv('master_data/foodtable1.csv', encoding='cp949')
     menus = food_data.to_dict('list')
     print(menus, len(food_data))
 
@@ -30,7 +30,7 @@ def food_data_insert():
         new_menu.save()
 
 def exe_data_insert():
-    exercise_data = pd.read_json('exercise.json', encoding='utf-8')
+    exercise_data = pd.read_json('master_data/exercise.json', encoding='utf-8')
     val = exercise_data.to_dict('list')
     print(val, len(exercise_data))
 
