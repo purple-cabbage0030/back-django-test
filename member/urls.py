@@ -1,10 +1,9 @@
 from django.urls import path
 
-from .views import registrationView, userSelectView, userUpdateView
+from .views import registrationView, userView
 
 app_name = 'member'
 urlpatterns = [
     path('register', registrationView, name='register'),
-    path('select', userSelectView, name='select'),
-    path('update', userUpdateView, name='update'),
+    path('userinfo', userView, name='userinfo'),
 ]
