@@ -11,7 +11,7 @@ from .models import Food, Diet, Train
 from .serializers import FoodSerializer, DietSerializer, TrainSerializer
 
 # 음식 분류
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def predictFoodView(request):
     targetx = 128
     targety = 128
@@ -46,7 +46,6 @@ def predictFoodView(request):
 @api_view(['GET', 'POST'])
 def dietView(request):
     if request.method == 'GET':
-        # requested_data = request.data
         uuid = request.GET['uuid']
         period = int(request.GET['period'])
         print(uuid, period, type(uuid), type(period))
