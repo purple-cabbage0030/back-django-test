@@ -59,9 +59,9 @@ coverage.xml
 *.log
 *.pyc
 local_settings.py
-# db.sqlite3
-# db.sqlite3-journal
-# secrets.json
+db.sqlite3
+db.sqlite3-journal
+secrets.json
 
 # Flask stuff:
 instance/
