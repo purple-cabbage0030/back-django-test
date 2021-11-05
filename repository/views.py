@@ -4,7 +4,6 @@ from datetime import date, datetime, timedelta
 
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.serializers import Serializer
 
 from .apps import ApiConfig
 from .models import Food, Diet, Train
