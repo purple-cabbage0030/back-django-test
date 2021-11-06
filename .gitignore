@@ -61,7 +61,10 @@ coverage.xml
 local_settings.py
 # db.sqlite3
 # db.sqlite3-journal
-# secrets.json
+secrets.json
+
+# Docker stuff:
+# .env.prod
 
 # Flask stuff:
 instance/
