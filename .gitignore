@@ -63,8 +63,8 @@ local_settings.py
 # db.sqlite3-journal
 
 # Docker stuff:
-.env.prod
-.env.dev
+# .env.prod
+# .env.dev
 
 # Flask stuff:
 instance/
