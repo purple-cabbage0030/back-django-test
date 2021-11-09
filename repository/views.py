@@ -24,7 +24,7 @@ def predictFoodView(request):
     image_arr = np.array(image_resize)   # PIL 이미지 타입을 ndarray로 변환
 
     X = np.array(image_arr)
-    X = X.astype("float") / 256
+    X = X.astype("float") / 255
     X = X.reshape(-1, targetx, targety,3)
 
     model = ApiConfig.model
